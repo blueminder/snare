@@ -33,12 +33,12 @@ Entities are references to external links, media, or other snare objects that ex
 
 ### Roadmap
 
-Basic functionality
-External Snare entity querying
-User/Client Authentication
-Example Client
+* Basic functionality
+* External Snare entity querying
+* User/Client Authentication
+* Example Client
 
-Potential Features
-Tagging
-External Entity Caching (referenced media, snare entries)
-Version Control
+### Potential Features
+* Tagging
+* External Entity Caching (referenced media, snare entries)
+* Entry Version Control
