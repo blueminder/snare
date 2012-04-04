@@ -11,7 +11,9 @@ before do
     $user = "test"
 end
 
-get '/' do
+# list sites
+get '/sites' do
+  list_sites
 end
 
 # new site
@@ -55,6 +57,16 @@ delete '/:site_id/:node_id/:attribute/' do
   @current_node = params["node_id"]
   @attribute = params["attribute"]
   remove_node_attribute(@current_site, @current_node, @attribute) 
+end
+
+def list_sites
+  unless $r.scard("#{$user}::sites") == 0
+    sites = $r.smembers("#{$user}::sites")
+    content_type :json
+    sites.to_json
+  else
+    status 400
+    body JSON.generate({:user => $user, :error => "No sites currently exist"})
 end
 
 def create_site(title)
