@@ -21,11 +21,24 @@ post '/:site_id/new' do
 end
 
 # new node
+# creates a new node with an initial entry
 post '/:site_id/:node_id/new' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
+  @entry_title = params["name"]
+  @entry_body = params["body"]
   create_node(@current_site, @current_node)
+  create_node_entry(@current_site, @current_node, @entry_title, @entry_body)
 end
+
+# new entry
+post '/:site_id/:node_id/new_entry' do
+  @current_site = params["site_id"]
+  @current_node = params["node_id"]
+  @entry_title = params["name"]
+  @entry_body = params["body"]
+  create_node_entry(@current_site, @current_node, @entry_title, @entry_body)
+end 
 
 def create_site(title)
   unless $r.sismember("#{$user}::sites", title)

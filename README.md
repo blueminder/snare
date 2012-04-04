@@ -25,11 +25,15 @@ Relationships outline the connections nodes and entities hold with one another. 
 
 ATL -> "torchbearer of" -> The Dirty South
 
-Any time that either "The Dirty South" or "ATL" arte queried for adjacent relationships, it's shown that ATL is the torchbearer of the runk scene that is the Dirty South.
+Any time that either "The Dirty South" or "ATL" arte queried for adjacent relationships, it's shown that ATL is the torchbearer of the crunk scene that is the Dirty South.
 
 ### Entities
 
 Entities are references to external links, media, or other snare objects that exist across sites. Any entities that are defined as snare objects may be treated similarly to nodes that are local to a site. Editing such entities as snare entries merely saves the changes locally, with the option to publicly display such modified entries.
+
+### Features
+Object Creation/Modification
+Tagging
 
 ### Roadmap
 
@@ -39,6 +43,5 @@ Entities are references to external links, media, or other snare objects that ex
 * Example Client
 
 ### Potential Features
-* Tagging
 * External Entity Caching (referenced media, snare entries)
 * Entry Version Control
