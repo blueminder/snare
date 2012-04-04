@@ -40,6 +40,23 @@ post '/:site_id/:node_id/new_entry' do
   create_node_entry(@current_site, @current_node, @entry_title, @entry_body)
 end 
 
+# set node attribute
+post '/:site_id/:node_id/:attribute/' do
+  @current_site = params["site_id"]
+  @current_node = params["node_id"]
+  @attribute = params["attribute"]
+  @content = params["content"]
+  set_node_attribute(@current_site, @current_node, @attribute, @content)
+end
+
+# remove node attribute
+delete '/:site_id/:node_id/:attribute/' do
+  @current_site = params["site_id"]
+  @current_node = params["node_id"]
+  @attribute = params["attribute"]
+  remove_node_attribute(@current_site, @current_node, @attribute) 
+end
+
 def create_site(title)
   unless $r.sismember("#{$user}::sites", title)
     $r.sadd("#{$user}::sites", title)
