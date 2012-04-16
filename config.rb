@@ -3,4 +3,4 @@
 
 # Redis config
 RedisHost = "127.0.0.1"
-RedisPort = 10000
+RedisPort = 6379 
