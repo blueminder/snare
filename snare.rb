@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'redis'
 require 'json'
-require 'date'
+require 'time'
 
 require_relative 'config'
                                                           
@@ -59,6 +59,12 @@ delete '/:site_id/:node_id/:attribute/' do
   remove_node_attribute(@current_site, @current_node, @attribute) 
 end
 
+get '/:site_id/:node_id/' do
+  @current_site = params["site_id"]
+  @current_node = params["node_id"]
+  show_node(@current_site, @current_node)
+end
+
 def list_sites
   unless $r.scard("#{$user}::sites") == 0
     sites = $r.smembers("#{$user}::sites")
@@ -67,6 +73,7 @@ def list_sites
   else
     status 400
     body JSON.generate({:user => $user, :error => "No sites currently exist"})
+  end
 end
 
 def create_site(title)
@@ -192,8 +199,8 @@ def create_node_entry(site, node, entry, content)
   if ($r.exists("#{$user}:#{site}:#{node}"))
     $r.sadd("#{$user}:#{site}:#{node}::entries", entry)
     $r.hset("#{$user}:#{site}:#{node}:#{entry}", "name", entry)
-    $r.hset("#{$user}:#{site}:#{node}:#{entry}", "created", Date.now)
-    $r.hset("#{$user}:#{site}:#{node}:#{entry}", "updated", Date.now)
+    $r.hset("#{$user}:#{site}:#{node}:#{entry}", "created", Time.now)
+    $r.hset("#{$user}:#{site}:#{node}:#{entry}", "updated", Time.now)
     $r.hset("#{$user}:#{site}:#{node}:#{entry}", "body", content)
     $r.hincrby("#{$user}:#{site}:#{node}", "entries", 1)
     show_entry(site, node, entry)
