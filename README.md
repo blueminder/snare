@@ -32,8 +32,9 @@ Any time that either "The Dirty South" or "ATL" arte queried for adjacent relati
 Entities are references to external links, media, or other snare objects that exist across sites. Any entities that are defined as snare objects may be treated similarly to nodes that are local to a site. Editing such entities as snare entries merely saves the changes locally, with the option to publicly display such modified entries.
 
 ### Features
-Object Creation/Modification
-Tagging
+
+* Object Creation/Modification
+* Tagging
 
 ### Roadmap
 
@@ -43,5 +44,6 @@ Tagging
 * Example Client
 
 ### Potential Features
+
 * External Entity Caching (referenced media, snare entries)
 * Entry Version Control
