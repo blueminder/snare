@@ -51,6 +51,17 @@ post '/:site_id/:node_id/:attribute/' do
   set_node_attribute(@current_site, @current_node, @attribute, @content)
 end
 
+# add relationship
+post '/:subject_site/:subject_node/:rel/:object_user/:object_site/:object_node' do
+  @subject_site = params["subject_site"]
+  @subject_node = params["subject_node"]
+  @predicate = params["rel"]
+  @object_user = params["object_user"]
+  @object_site = params["object_site"]
+  @object_node = params["object_node"]
+  create_rel(@subject_site, @subject_node, @predicate, @object_user, @object_site, @object_node)
+end
+
 # remove node attribute
 delete '/:site_id/:node_id/:attribute/' do
   @current_site = params["site_id"]
@@ -250,10 +261,10 @@ end
 
 def edit_rel(subject_site, subject_node, old_predicate, object_user, object_site, object_node, new_predicate)
   if ($r.exists("#{$user}:#{subject_site}:#{subject_node}"))
-    $r.sadd("#{$user}:#{site}::relationships", "#{new_predicate}")
+    $r.sadd("#{$user}:#{subject_site}::relationships", "#{new_predicate}")
     $r.srem("#{$user}:#{subject_site}::relationship:#{old_predicate}", "#{object_user}:#{object_site}:#{object_node}")
     if ($r.scard("#{$user}:#{subject_site}::relationship:#{old_predicate}") == 0)
-      $r.srem("#{$user}:#{site}::relationships", "#{old_predicate}")
+      $r.srem("#{$user}:#{subject_site}::relationships", "#{old_predicate}")
     end
     $r.sadd("#{$user}:#{subject_site}::relationship:#{new_predicate}", "#{object_user}:#{object_site}:#{object_node}")
   end
@@ -261,8 +272,8 @@ end
 
 def remove_rel(subject_site, subject_node, predicate, object_user, object_site, object_node)
   if ($r.exists("#{$user}:#{subject_site}:#{subject_node}::relationship:#{predicate}"))
-    $r.srem("#{$user}:#{site}::relationship:#{predicate}", "#{object_user}:#{object_site}:#{object_node}")
-    $r.srem("#{$user}:#{site}::relationships", "#{predicate}")
+    $r.srem("#{$user}:#{subject_site}::relationship:#{predicate}", "#{object_user}:#{object_site}:#{object_node}")
+    $r.srem("#{$user}:#{subject_site}::relationships", "#{predicate}")
   end
 end
 
