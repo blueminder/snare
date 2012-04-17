@@ -43,12 +43,20 @@ post '/:site_id/:node_id/new_entry' do
 end 
 
 # set node attribute
-post '/:site_id/:node_id/:attribute/' do
+post "/:site_id/:node_id/a\::attribute" do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @attribute = params["attribute"]
   @content = params["content"]
   set_node_attribute(@current_site, @current_node, @attribute, @content)
+end
+
+# remove node attribute
+delete "/:site_id/:node_id/a\::attribute" do
+  @current_site = params["site_id"]
+  @current_node = params["node_id"]
+  @attribute = params["attribute"]
+  remove_node_attribute(@current_site, @current_node, @attribute)
 end
 
 # tag site
@@ -163,14 +171,6 @@ delete '/:subject_site/:subject_node/:rel/:object_user/:object_site/:object_node
   @object_site = params["object_site"]
   @object_node = params["object_node"]
   remove_rel(@subject_site, @subject_node, @predicate, @object_user, @object_site, @object_node)
-end
-
-# remove node attribute
-delete '/:site_id/:node_id/:attribute/' do
-  @current_site = params["site_id"]
-  @current_node = params["node_id"]
-  @attribute = params["attribute"]
-  remove_node_attribute(@current_site, @current_node, @attribute) 
 end
 
 # show node
@@ -305,8 +305,7 @@ end
 def remove_node_attribute(site, node, attribute)
   if ($r.exists("#{$user}:#{site}:#{node}"))
     $r.hdel("#{$user}:#{site}:#{node}", attribute)
-    content_type :json
-    show_node(site, node)
+    show_node(@current_site, @current_node)
   end
 end
 
