@@ -60,7 +60,7 @@ delete "/:site_id/:node_id/a\::attribute" do
 end
 
 # tag site
-post '/tag/:site_id/' do
+post '/tag/:site_id' do
   @current_site = params["site_id"]
   # tags represented as a comma-separated string
   @tags = params["tags"].split(',')
@@ -68,7 +68,7 @@ post '/tag/:site_id/' do
 end
 
 # untag site
-post '/untag/:site_id/' do
+post '/untag/:site_id' do
   @current_site = params["site_id"]
   # tags represented as a comma-separated string
   @tags = params["tags"].split(',')
@@ -76,7 +76,7 @@ post '/untag/:site_id/' do
 end
 
 # tag node
-post '/tag/:site_id/:node_id/' do
+post '/tag/:site_id/:node_id' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   # tags represented as a comma-separated string
@@ -85,7 +85,7 @@ post '/tag/:site_id/:node_id/' do
 end
 
 # untag node
-post '/untag/:site_id/:node_id/' do
+post '/untag/:site_id/:node_id' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   # tags represented as a comma-separated string
@@ -104,7 +104,7 @@ post '/tag/:site_id/:node_id/:entry_id' do
 end
 
 # untag entry
-post '/untag/:site_id/:node_id/:entry_id/' do
+post '/untag/:site_id/:node_id/:entry_id' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @current_entry = params["entry_id"]
@@ -114,7 +114,7 @@ post '/untag/:site_id/:node_id/:entry_id/' do
 end
 
 # tag relationship
-post '/tag_rel/:site_id/:node_id/:rel/:object_user/:object_site/:object_node/' do
+post '/tag_rel/:site_id/:node_id/:rel/:object_user/:object_site/:object_node' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @predicate = params["rel"]
@@ -127,7 +127,7 @@ post '/tag_rel/:site_id/:node_id/:rel/:object_user/:object_site/:object_node/' d
 end
 
 # untag relationship
-post '/untag_rel/:site_id/:node_id/:rel/:object_user/:object_site/:object_node/' do
+post '/untag_rel/:site_id/:node_id/:rel/:object_user/:object_site/:object_node' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @predicate = params["rel"]
@@ -140,7 +140,7 @@ post '/untag_rel/:site_id/:node_id/:rel/:object_user/:object_site/:object_node/'
 end
 
 # add relationship
-post '/:subject_site/:subject_node/:rel/:object_user/:object_site/:object_node/' do
+post '/:subject_site/:subject_node/:rel/:object_user/:object_site/:object_node' do
   @subject_site = params["subject_site"]
   @subject_node = params["subject_node"]
   @predicate = params["rel"]
@@ -151,7 +151,7 @@ post '/:subject_site/:subject_node/:rel/:object_user/:object_site/:object_node/'
 end
 
 # edit relationship
-post '/:subject_site/:subject_node/:rel/:object_user/:object_site/:object_node/:new_rel/' do
+post '/:subject_site/:subject_node/:rel/:object_user/:object_site/:object_node/:new_rel' do
   @subject_site = params["subject_site"]
   @subject_node = params["subject_node"]
   @predicate = params["rel"]
@@ -163,7 +163,7 @@ post '/:subject_site/:subject_node/:rel/:object_user/:object_site/:object_node/:
 end
 
 # remove relationship
-delete '/:subject_site/:subject_node/:rel/:object_user/:object_site/:object_node/' do
+delete '/:subject_site/:subject_node/:rel/:object_user/:object_site/:object_node' do
   @subject_site = params["subject_site"]
   @subject_node = params["subject_node"]
   @predicate = params["rel"]
@@ -174,14 +174,14 @@ delete '/:subject_site/:subject_node/:rel/:object_user/:object_site/:object_node
 end
 
 # show node
-get '/:site_id/:node_id/' do
+get '/:site_id/:node_id' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   show_node(@current_site, @current_node)
 end
 
 # show entry
-get '/:site_id/:node_id/:entry_id/' do
+get '/:site_id/:node_id/:entry_id' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @current_entry = params["entry_id"]
