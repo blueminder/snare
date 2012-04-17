@@ -33,14 +33,18 @@ Relationships may also exist between nodes and entities, or even between entitie
 
 Entities are references to external links, media, or other snare objects that exist across sites. Any entities that are defined as snare objects may be treated similarly to nodes that are local to a site. Editing such entities as snare entries merely saves the changes locally, with the option to publicly display such modified entries.
 
-### Features
+### Functionality
 
-* Object Creation/Modification
+* Sites
+* Nodes
+* Attributes
+* Relationships
 * Tagging
+* JSON output
 
 ### Roadmap
 
-* Basic functionality
+* Entities
 * RDF output
 * External Snare entity querying
 * User/Client Authentication
