@@ -51,6 +51,24 @@ post '/:site_id/:node_id/:attribute/' do
   set_node_attribute(@current_site, @current_node, @attribute, @content)
 end
 
+# tag node
+post '/tag/:site_id/:node_id/' do
+  @current_site = params["site_id"]
+  @current_node = params["node_id"]
+  # tags represented as a comma-separated string
+  @tags = params["tags"].split(',')
+  tag_node(@current_site, @current_node, @tags)
+end
+
+# untag node
+post '/tag/:site_id/:node_id/' do
+  @current_site = params["site_id"]
+  @current_node = params["node_id"]
+  # tags represented as a comma-separated string
+  @tags = params["tags"].split(',')
+  untag_node(@current_site, @current_node, @tags)
+end
+
 # add relationship
 post '/:subject_site/:subject_node/:rel/:object_user/:object_site/:object_node' do
   @subject_site = params["subject_site"]
