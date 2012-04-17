@@ -61,12 +61,32 @@ post '/tag/:site_id/:node_id/' do
 end
 
 # untag node
-post '/tag/:site_id/:node_id/' do
+post '/untag/:site_id/:node_id/' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   # tags represented as a comma-separated string
   @tags = params["tags"].split(',')
   untag_node(@current_site, @current_node, @tags)
+end
+
+# tag entry
+post '/tag/:site_id/:node_id/:entry_id' do
+  @current_site = params["site_id"]
+  @current_node = params["node_id"]
+  @current_entry = params["entry_id"]
+  # tags represented as a comma-separated string
+  @tags = params["tags"].split(',')
+  tag_node_entry(@current_site, @current_node, @current_entry, @tags)
+end
+
+# untag entry
+post '/untag/:site_id/:node_id/:entry_id' do
+  @current_site = params["site_id"]
+  @current_node = params["node_id"]
+  @current_entry = params["entry_id"]
+  # tags represented as a comma-separated string
+  @tags = params["tags"].split(',')
+  tag_node_entry(@current_site, @current_node, @current_entry, @tags)
 end
 
 # add relationship
