@@ -60,82 +60,82 @@ delete "/:site_id/:node_id/a\::attribute" do
 end
 
 # tag site
-post '/tag/:site_id' do
+post "/:site_id/t\::tags" do
   @current_site = params["site_id"]
-  # tags represented as a comma-separated string
-  @tags = params["tags"].split(',')
+  # tags represented as a '+' separated string
+  @tags = params["tags"].split('+')
   tag_site(@current_site, @tags)
 end
 
 # untag site
-post '/untag/:site_id' do
+delete "/:site_id/t\::tags" do
   @current_site = params["site_id"]
-  # tags represented as a comma-separated string
-  @tags = params["tags"].split(',')
+  # tags represented as a '+' separated string
+  @tags = params["tags"].split('+')
   untag_site(@current_site, @tags)
 end
 
 # tag node
-post '/tag/:site_id/:node_id' do
+post "/:site_id/:node_id/t\::tags" do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
-  # tags represented as a comma-separated string
-  @tags = params["tags"].split(',')
+  # tags represented as a '+' string
+  @tags = params["tags"].split('+')
   tag_node(@current_site, @current_node, @tags)
 end
 
 # untag node
-post '/untag/:site_id/:node_id' do
+delete "/:site_id/:node_id/t\::tags" do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
-  # tags represented as a comma-separated string
-  @tags = params["tags"].split(',')
+  # tags represented as a '+' separated string
+  @tags = params["tags"].split('+')
   untag_node(@current_site, @current_node, @tags)
 end
 
 # tag entry
-post '/tag/:site_id/:node_id/:entry_id' do
+post "/:site_id/:node_id/:entry_id/t\::tags" do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @current_entry = params["entry_id"]
-  # tags represented as a comma-separated string
-  @tags = params["tags"].split(',')
+  # tags represented as a '+' separated string
+  @tags = params["tags"].split('+')
   tag_node_entry(@current_site, @current_node, @current_entry, @tags)
 end
 
 # untag entry
-post '/untag/:site_id/:node_id/:entry_id' do
+delete "/:site_id/:node_id/:entry_id/t\::tags" do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @current_entry = params["entry_id"]
-  # tags represented as a comma-separated string
-  @tags = params["tags"].split(',')
+  # tags represented as a '+' separated string
+  @tags = params["tags"].split('+')
   tag_node_entry(@current_site, @current_node, @current_entry, @tags)
 end
 
 # tag relationship
-post '/tag_rel/:site_id/:node_id/:rel/:object_user/:object_site/:object_node' do
+post "/:site_id/:node_id/:rel/:object_user/:object_site/:object_node/t\::tags" do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @predicate = params["rel"]
   @object_user = params["object_user"]
   @object_site = params["object_site"]
   @object_node = params["object_node"]
-  # tags represented as a comma-separated string
-  @tags = params["tags"].split(',')
+  # tags represented as a '+' separated string
+  @tags = params["tags"].split('+')
   tag_rel(@current_site, @current_node, @predicate, @object_site, @object_node, @tags)
 end
 
 # untag relationship
-post '/untag_rel/:site_id/:node_id/:rel/:object_user/:object_site/:object_node' do
+delete "/:site_id/:node_id/:rel/:object_user/:object_site/:object_node/t\::tags" do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @predicate = params["rel"]
   @object_user = params["object_user"]
   @object_site = params["object_site"]
   @object_node = params["object_node"]
-  # tags represented as a comma-separated string
-  @tags = params["tags"].split(',')
+  # tags represented as a '+' separated string
+  @tags = params["tags"].split('+')
   untag_rel(@current_site, @current_node, @predicate, @object_site, @object_node, @tags)
 end
 
@@ -379,7 +379,7 @@ def remove_rel(subject_site, subject_node, predicate, object_user, object_site, 
   end
 end
 
-def tag_site(site, *tags)
+def tag_site(site, tags)
   if ($r.exists("#{$user}:#{site}"))
     $r.sadd("#{$user}::tagged:sites", site)
     tags.each do |tag|
@@ -388,7 +388,7 @@ def tag_site(site, *tags)
   end
 end
 
-def untag_site(site, *tags)
+def untag_site(site, tags)
   if ($r.exists("#{$user}:#{site}::tags"))
     tags.each do |tag|
       $r.srem("#{$user}:#{site}::tags", tag)
@@ -400,7 +400,7 @@ def untag_site(site, *tags)
   end
 end
 
-def tag_node(site, node, *tags)
+def tag_node(site, node, tags)
   if ($r.exists("#{$user}:#{site}:#{node}"))
     $r.sadd("#{$user}::tagged:nodes", "#{site}:#{node}")
     $r.sadd("#{$user}:#{site}::tagged:nodes", node)
@@ -410,7 +410,7 @@ def tag_node(site, node, *tags)
   end
 end
 
-def untag_node(site, node, *tags)
+def untag_node(site, node, tags)
   if ($r.exists("#{$user}:#{site}:#{node}::tags"))
     tags.each do |tag|
       $r.srem("#{$user}:#{site}:#{node}::tags", tag)
@@ -423,7 +423,7 @@ def untag_node(site, node, *tags)
   end
 end
 
-def tag_entry(site, node, entry, *tags)
+def tag_entry(site, node, entry, tags)
   if ($r.exists("#{$user}:#{site}:#{node}:#{entry}"))
     $r.sadd("#{$user}::tagged:entries", "#{site}:#{node}:#{entry}")
     $r.sadd("#{$user}:#{site}:#{node}::tagged:entries", entry)
@@ -433,7 +433,7 @@ def tag_entry(site, node, entry, *tags)
   end
 end
 
-def untag_entry(site, node, *tags)
+def untag_entry(site, node, tags)
   if ($r.exists("#{$user}:#{site}:#{node}:#{entry}::tags"))
     tags.each do |tag|
       $r.srem("#{$user}:#{site}:#{node}::tags", tag)
@@ -446,7 +446,7 @@ def untag_entry(site, node, *tags)
   end
 end
 
-def tag_rel(subject_site, subject_node, predicate, object_site, object_node, *tags)
+def tag_rel(subject_site, subject_node, predicate, object_site, object_node, tags)
   if ($r.exists("#{$user}:#{site}:#{node}:#{entry}"))
     $r.sadd("#{$user}::tagged:entries", "#{site}:#{node}:#{entry}")
     $r.sadd("#{$user}:#{site}:#{node}::tagged:entries", entry)
@@ -456,7 +456,7 @@ def tag_rel(subject_site, subject_node, predicate, object_site, object_node, *ta
   end
 end
 
-def untag_rel(subject_site, subject_node, predicate, object_site, object_node, *tags)
+def untag_rel(subject_site, subject_node, predicate, object_site, object_node, tags)
   if ($r.exists("#{$user}:#{site}:#{node}:#{entry}::tags"))
     tags.each do |tag|
       $r.srem("#{$user}:#{site}:#{node}::tags", tag)
