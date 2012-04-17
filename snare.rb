@@ -59,10 +59,19 @@ delete '/:site_id/:node_id/:attribute/' do
   remove_node_attribute(@current_site, @current_node, @attribute) 
 end
 
+# show node
 get '/:site_id/:node_id/' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   show_node(@current_site, @current_node)
+end
+
+# show entry
+get '/:site_id/:node_id/:entry_id/' do
+  @current_site = params["site_id"]
+  @current_node = params["node_id"]
+  @current_entry = params["entry_id"]
+  show_entry(@current_site, @current_node, @current_entry)
 end
 
 def list_sites
