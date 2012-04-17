@@ -80,7 +80,7 @@ post '/tag/:site_id/:node_id/:entry_id' do
 end
 
 # untag entry
-post '/untag/:site_id/:node_id/:entry_id' do
+post '/untag/:site_id/:node_id/:entry_id/' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @current_entry = params["entry_id"]
@@ -89,8 +89,34 @@ post '/untag/:site_id/:node_id/:entry_id' do
   tag_node_entry(@current_site, @current_node, @current_entry, @tags)
 end
 
+# tag relationship
+post '/tag_rel/:site_id/:node_id/:rel/:object_user/:object_site/:object_node/' do
+  @current_site = params["site_id"]
+  @current_node = params["node_id"]
+  @predicate = params["rel"]
+  @object_user = params["object_user"]
+  @object_site = params["object_site"]
+  @object_node = params["object_node"]
+  # tags represented as a comma-separated string
+  @tags = params["tags"].split(',')
+  tag_rel(@current_site, @current_node, @predicate, @object_site, @object_node, @tags)
+end
+
+# untag relationship
+post '/untag_rel/:site_id/:node_id/:rel/:object_user/:object_site/:object_node/' do
+  @current_site = params["site_id"]
+  @current_node = params["node_id"]
+  @predicate = params["rel"]
+  @object_user = params["object_user"]
+  @object_site = params["object_site"]
+  @object_node = params["object_node"]
+  # tags represented as a comma-separated string
+  @tags = params["tags"].split(',')
+  untag_rel(@current_site, @current_node, @predicate, @object_site, @object_node, @tags)
+end
+
 # add relationship
-post '/:subject_site/:subject_node/:rel/:object_user/:object_site/:object_node' do
+post '/:subject_site/:subject_node/:rel/:object_user/:object_site/:object_node/' do
   @subject_site = params["subject_site"]
   @subject_node = params["subject_node"]
   @predicate = params["rel"]
