@@ -51,6 +51,22 @@ post '/:site_id/:node_id/:attribute/' do
   set_node_attribute(@current_site, @current_node, @attribute, @content)
 end
 
+# tag site
+post '/tag/:site_id/' do
+  @current_site = params["site_id"]
+  # tags represented as a comma-separated string
+  @tags = params["tags"].split(',')
+  tag_site(@current_site, @tags)
+end
+
+# untag site
+post '/untag/:site_id/' do
+  @current_site = params["site_id"]
+  # tags represented as a comma-separated string
+  @tags = params["tags"].split(',')
+  untag_site(@current_site, @tags)
+end
+
 # tag node
 post '/tag/:site_id/:node_id/' do
   @current_site = params["site_id"]
