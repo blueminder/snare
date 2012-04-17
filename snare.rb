@@ -126,6 +126,29 @@ post '/:subject_site/:subject_node/:rel/:object_user/:object_site/:object_node/'
   create_rel(@subject_site, @subject_node, @predicate, @object_user, @object_site, @object_node)
 end
 
+# edit relationship
+post '/:subject_site/:subject_node/:rel/:object_user/:object_site/:object_node/:new_rel/' do
+  @subject_site = params["subject_site"]
+  @subject_node = params["subject_node"]
+  @predicate = params["rel"]
+  @object_user = params["object_user"]
+  @object_site = params["object_site"]
+  @object_node = params["object_node"]
+  @new_predicate = params["new_rel"]
+  edit_rel(@subject_site, @subject_node, @predicate, @object_user, @object_site, @object_node, @new_predicate)
+end
+
+# remove relationship
+delete '/:subject_site/:subject_node/:rel/:object_user/:object_site/:object_node/' do
+  @subject_site = params["subject_site"]
+  @subject_node = params["subject_node"]
+  @predicate = params["rel"]
+  @object_user = params["object_user"]
+  @object_site = params["object_site"]
+  @object_node = params["object_node"]
+  remove_rel(@subject_site, @subject_node, @predicate, @object_user, @object_site, @object_node)
+end
+
 # remove node attribute
 delete '/:site_id/:node_id/:attribute/' do
   @current_site = params["site_id"]
