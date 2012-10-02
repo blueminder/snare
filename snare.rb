@@ -49,6 +49,14 @@ post '/:site_id/:node_id/:entry_id' do
   end
 end 
 
+# remove node entry
+delete '/:site_id/:node_id/:entry_id' do
+  @current_site = params["site_id"]
+  @current_node = params["node_id"]
+  @entry_title = params["entry_id"]
+  remove_node_entry(@current_site, @current_node, @entry_title)
+end
+
 # set node attribute
 post "/:site_id/:node_id/a\::attribute" do
   @current_site = params["site_id"]
@@ -354,7 +362,7 @@ def rename_node_entry(site, node, old_entry_name, new_entry_name)
   end
 end
 
-def remove_node_entry(site, node, entry, name)
+def remove_node_entry(site, node, entry)
   if ($r.exists("#{$user}:#{site}:#{node}:#{entry}"))
     $r.srem("#{$user}:#{site}:#{node}::entries", entry)
     $r.del("#{$user}:#{site}:#{node}:#{entry}")
