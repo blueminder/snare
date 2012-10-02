@@ -57,6 +57,14 @@ delete '/:site_id/:node_id/e\::entry_id' do
   remove_node_entry(@current_site, @current_node, @entry_title)
 end
 
+# get node attribute
+get '/:site_id/:node_id/a\::attribute' do
+  @current_site = params["site_id"]
+  @current_node = params["node_id"]
+  @attribute = params["attribute"]
+  show_node_attribute(@current_site, @current_node, @attribute)
+end
+
 # set node attribute
 post "/:site_id/:node_id/a\::attribute" do
   @current_site = params["site_id"]
@@ -307,6 +315,18 @@ def show_node(site, title)
     content_type :json
     JSON.generate(node)
   end
+end
+
+def show_node_attribute(site, node, attribute)
+  if ($r.hexists("#{$user}:#{site}:#{node}", attribute))
+    shown = Hash.new
+    shown['user'] = $user
+    shown['site'] = site
+    shown['node'] = node
+    shown[attribute] = $r.hget("#{$user}:#{site}:#{node}", attribute)
+    content_type :json
+    JSON.generate(shown)
+  end 
 end
 
 def set_node_attribute(site, node, attribute, content)
