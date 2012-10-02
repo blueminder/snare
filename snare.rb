@@ -29,6 +29,13 @@ post '/:site_id/:node_id' do
   create_node(@current_site, @current_node)
 end
 
+# remove node
+delete '/:site_id/:node_id' do
+  @current_site = params["site_id"]
+  @current_node = params["node_id"]
+  remove_node(@current_site, @current_node)
+end
+
 # create or modify entry
 post '/:site_id/:node_id/:entry_id' do
   @current_site = params["site_id"]
