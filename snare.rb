@@ -37,7 +37,7 @@ delete '/:site_id/:node_id' do
 end
 
 # create or modify entry
-post '/:site_id/:node_id/:entry_id' do
+post '/:site_id/:node_id/e\::entry_id' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @entry_title = params["entry_id"]
@@ -50,7 +50,7 @@ post '/:site_id/:node_id/:entry_id' do
 end 
 
 # remove node entry
-delete '/:site_id/:node_id/:entry_id' do
+delete '/:site_id/:node_id/e\::entry_id' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @entry_title = params["entry_id"]
@@ -109,7 +109,7 @@ delete "/:site_id/:node_id/t\::tags" do
 end
 
 # tag entry
-post "/:site_id/:node_id/:entry_id/t\::tags" do
+post "/:site_id/:node_id/e\::entry_id/t\::tags" do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @current_entry = params["entry_id"]
@@ -119,7 +119,7 @@ post "/:site_id/:node_id/:entry_id/t\::tags" do
 end
 
 # untag entry
-delete "/:site_id/:node_id/:entry_id/t\::tags" do
+delete "/:site_id/:node_id/e\::entry_id/t\::tags" do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @current_entry = params["entry_id"]
@@ -196,7 +196,7 @@ get '/:site_id/:node_id' do
 end
 
 # show entry
-get '/:site_id/:node_id/:entry_id' do
+get '/:site_id/:node_id/e\::entry_id' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @current_entry = params["entry_id"]
