@@ -29,13 +29,17 @@ post '/:site_id/:node_id' do
   create_node(@current_site, @current_node)
 end
 
-# new entry
+# create or modify entry
 post '/:site_id/:node_id/:entry_id' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @entry_title = params["entry_id"]
   @entry_body = params["body"]
-  create_node_entry(@current_site, @current_node, @entry_title, @entry_body)
+  if ($r.exists("#{$user}:#{@current_site}:#{@current_node}:#{@entry_title}"))
+    edit_node_entry(@current_site, @current_node, @entry_title, @entry_body) 
+  else
+    create_node_entry(@current_site, @current_node, @entry_title, @entry_body)
+  end
 end 
 
 # set node attribute
@@ -327,7 +331,8 @@ end
 
 def edit_node_entry(site, node, entry, content)
   if ($r.exists("#{$user}:#{site}:#{node}:#{entry}"))
-    $r.hset("#{$user}:#{site}:#{node}:#{entry}", "content", content)
+    $r.hset("#{$user}:#{site}:#{node}:#{entry}", "updated", Time.now)
+    $r.hset("#{$user}:#{site}:#{node}:#{entry}", "body", content)
     show_entry(site, node, entry)
   end
 end
