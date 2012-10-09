@@ -23,21 +23,21 @@ post '/:site_id' do
 end
 
 # new node
-post '/:site_id/:node_id' do
+post '/:site_id/n\::node_id' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   create_node(@current_site, @current_node)
 end
 
 # remove node
-delete '/:site_id/:node_id' do
+delete '/:site_id/n\::node_id' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   remove_node(@current_site, @current_node)
 end
 
 # create or modify entry
-post '/:site_id/:node_id/e\::entry_id' do
+post '/:site_id/n\::node_id/e\::entry_id' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @entry_title = params["entry_id"]
@@ -50,7 +50,7 @@ post '/:site_id/:node_id/e\::entry_id' do
 end 
 
 # remove node entry
-delete '/:site_id/:node_id/e\::entry_id' do
+delete '/:site_id/n\::node_id/e\::entry_id' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @entry_title = params["entry_id"]
@@ -58,7 +58,7 @@ delete '/:site_id/:node_id/e\::entry_id' do
 end
 
 # get node attribute
-get '/:site_id/:node_id/a\::attribute' do
+get '/:site_id/n\::node_id/a\::attribute' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @attribute = params["attribute"]
@@ -66,7 +66,7 @@ get '/:site_id/:node_id/a\::attribute' do
 end
 
 # set node attribute
-post "/:site_id/:node_id/a\::attribute" do
+post "/:site_id/n\::node_id/a\::attribute" do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @attribute = params["attribute"]
@@ -75,7 +75,7 @@ post "/:site_id/:node_id/a\::attribute" do
 end
 
 # remove node attribute
-delete "/:site_id/:node_id/a\::attribute" do
+delete "/:site_id/n\::node_id/a\::attribute" do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @attribute = params["attribute"]
@@ -99,7 +99,7 @@ delete "/:site_id/t\::tags" do
 end
 
 # tag node
-post "/:site_id/:node_id/t\::tags" do
+post "/:site_id/n\::node_id/t\::tags" do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   # tags represented as a '+' string
@@ -108,7 +108,7 @@ post "/:site_id/:node_id/t\::tags" do
 end
 
 # untag node
-delete "/:site_id/:node_id/t\::tags" do
+delete "/:site_id/n\::node_id/t\::tags" do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   # tags represented as a '+' separated string
@@ -117,7 +117,7 @@ delete "/:site_id/:node_id/t\::tags" do
 end
 
 # tag entry
-post "/:site_id/:node_id/e\::entry_id/t\::tags" do
+post "/:site_id/n\::node_id/e\::entry_id/t\::tags" do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @current_entry = params["entry_id"]
@@ -127,7 +127,7 @@ post "/:site_id/:node_id/e\::entry_id/t\::tags" do
 end
 
 # untag entry
-delete "/:site_id/:node_id/e\::entry_id/t\::tags" do
+delete "/:site_id/n\::node_id/e\::entry_id/t\::tags" do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @current_entry = params["entry_id"]
@@ -137,7 +137,7 @@ delete "/:site_id/:node_id/e\::entry_id/t\::tags" do
 end
 
 # tag relationship
-post "/:site_id/:node_id/r\::rel/:object_user/:object_site/:object_node/t\::tags" do
+post "/:site_id/n\::node_id/r\::rel/:object_user/:object_site/:object_node/t\::tags" do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @predicate = params["rel"]
@@ -150,7 +150,7 @@ post "/:site_id/:node_id/r\::rel/:object_user/:object_site/:object_node/t\::tags
 end
 
 # untag relationship
-delete "/:site_id/:node_id/r\::rel/:object_user/:object_site/:object_node/t\::tags" do
+delete "/:site_id/n\::node_id/r\::rel/:object_user/:object_site/:object_node/t\::tags" do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @predicate = params["rel"]
@@ -197,14 +197,14 @@ delete "/:subject_site/:subject_node/r\::rel/:object_user/:object_site/:object_n
 end
 
 # show node
-get '/:site_id/:node_id' do
+get '/:site_id/n\::node_id' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   show_node(@current_site, @current_node)
 end
 
 # show entry
-get '/:site_id/:node_id/e\::entry_id' do
+get '/:site_id/n\::node_id/e\::entry_id' do
   @current_site = params["site_id"]
   @current_node = params["node_id"]
   @current_entry = params["entry_id"]
