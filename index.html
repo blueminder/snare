@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>snare by blueminder</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>snare</h1>
+        <p>A simple JSON API intended for semantic wikis and various experiments in playing with data.</p>
+
+        <p class="view"><a href="https://github.com/blueminder/snare">View the Project on GitHub <small>blueminder/snare</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/blueminder/snare/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/blueminder/snare/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/blueminder/snare">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h2>( site - node - attribute - relationship - entity )</h2>
+
+<p>Snare is a simple JSON API intended for semantic wikis and various experiments in playing with data. It is a spiritual successor to brainiac with some inspiration taken from the Everything2 writing community and ENQUIRE by Tim Berners-Lee.</p>
+
+<p>Snare is intended to encourage a simple way for semantic wikis to refer to specific sections of writing across servers, while acting as a simple backend for programmers to mess with data that is shared in this way.</p>
+
+<p>The code and description that's up now is largely a rough sketch of what I had in mind. It's nowhere near complete at this point, but github makes version control easy peasy lemon squeezy.</p>
+
+<p>Snare is written in Ruby using Sinatra, and uses Redis as a database.</p>
+
+<p>Snare consists of a few simple objects:</p>
+
+<h3>Site</h3>
+
+<p>Sites hold collections of nodes, attributes, relationships and entities.</p>
+
+<h3>Nodes</h3>
+
+<p>Nodes hold entries of writing classified under a specific concept defined as the node's title. Entries may explicitly link to any other objects or entities of their choosing.</p>
+
+<h3>Relationships</h3>
+
+<p>Relationships outline the connections nodes hold with one another. For example: If I had a node representing "ATL" and another one called the "The Dirty South", I can specify a relationship that specifies</p>
+
+<p>ATL -&gt; "torchbearer of" -&gt; The Dirty South</p>
+
+<p>Any time that either "The Dirty South" or "ATL" arte queried for adjacent relationships, it's shown that ATL is the torchbearer of the crunk scene that is the Dirty South.</p>
+
+<p>Relationships may also exist between nodes and entities, or even between entities.</p>
+
+<h3>Entities</h3>
+
+<p>Entities are references to external links, media, or other snare objects that exist across sites. Any entities that are defined as snare objects may be treated similarly to nodes that are local to a site. Editing such entities as snare entries merely saves the changes locally, with the option to publicly display such modified entries.</p>
+
+<h3>Functionality</h3>
+
+<ul>
+<li>Sites</li>
+<li>Nodes</li>
+<li>Attributes</li>
+<li>Relationships</li>
+<li>Tagging</li>
+<li>JSON output</li>
+</ul><h3>Roadmap</h3>
+
+<ul>
+<li>Entities</li>
+<li>RDF output</li>
+<li>External Snare entity querying</li>
+<li>User/Client Authentication</li>
+<li>Example Client</li>
+<li>SPARQL querying of snare objects</li>
+</ul><h3>Potential Features</h3>
+
+<ul>
+<li>External Entity Caching (referenced media, snare entries)</li>
+<li>Entry Version Control</li>
+</ul>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/blueminder">blueminder</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
