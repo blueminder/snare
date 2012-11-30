@@ -1,0 +1,220 @@
+
+{
+    "nodes": {
+        "snare": {
+            "requests": [{
+                "id": "BE0C157A-58DB-4356-A722-4A8C69FEFED6",
+                "name": "list sites",
+                "request": {
+                    "protocol": "HTTP",
+                    "method": {
+                        "name": "GET",
+                        "request-body": false
+                    },
+                    "url": "localhost:4567/sites",
+                    "body-type": "Text",
+                    "headers-type": "Form",
+                    "url-assist": false
+                },
+                "modified": "Thu, 29 Nov 2012 18:00:27 -0800"
+            }, {
+                "id": "A8CDC674-F2AF-4F77-9656-AD4CA46CEFBC",
+                "name": "create new site",
+                "request": {
+                    "protocol": "HTTP",
+                    "method": {
+                        "name": "POST",
+                        "request-body": true
+                    },
+                    "url": "localhost:4567/a_new_site",
+                    "body-type": "Text",
+                    "headers-type": "Form",
+                    "url-assist": false
+                },
+                "modified": "Thu, 29 Nov 2012 18:03:19 -0800"
+            }, {
+                "id": "54E92970-2295-406B-A952-D9F6374AFA31",
+                "name": "create new node",
+                "request": {
+                    "protocol": "HTTP",
+                    "method": {
+                        "name": "POST",
+                        "request-body": true
+                    },
+                    "url": "localhost:4567/a_new_site/n:a_new_node",
+                    "body-type": "Text",
+                    "headers-type": "Form",
+                    "url-assist": false
+                },
+                "modified": "Thu, 29 Nov 2012 18:04:40 -0800"
+            }, {
+                "id": "35558CF9-75B3-4FDA-8C99-5D8DA3DE6E88",
+                "name": "delete node",
+                "request": {
+                    "protocol": "HTTP",
+                    "method": {
+                        "name": "DELETE",
+                        "request-body": false
+                    },
+                    "url": "localhost:4567/a_new_site/n:a_new_node",
+                    "body-type": "Text",
+                    "headers-type": "Form",
+                    "url-assist": false
+                },
+                "modified": "Thu, 29 Nov 2012 18:05:49 -0800"
+            }, {
+                "id": "7FB4AF10-CEC2-4451-9FAE-996BA3052016",
+                "name": "get node",
+                "request": {
+                    "protocol": "HTTP",
+                    "method": {
+                        "name": "GET",
+                        "request-body": false
+                    },
+                    "url": "localhost:4567/a_new_site/n:a_new_node",
+                    "body-type": "Text",
+                    "headers-type": "Form",
+                    "url-assist": false
+                },
+                "modified": "Thu, 29 Nov 2012 18:06:16 -0800"
+            }, {
+                "id": "F08E6E12-8E21-4EF9-BEAD-4817CE138F99",
+                "name": "create or modify entry",
+                "request": {
+                    "protocol": "HTTP",
+                    "method": {
+                        "name": "POST",
+                        "request-body": true
+                    },
+                    "url": "localhost:4567/a_new_site/n:a_new_node/e:a_new_entry?body=entry body",
+                    "body-type": "Text",
+                    "headers-type": "Form",
+                    "url-assist": false
+                },
+                "modified": "Thu, 29 Nov 2012 18:10:59 -0800"
+            }, {
+                "id": "8F266E27-2A58-4876-9596-F45ED65A5663",
+                "name": "get entry",
+                "request": {
+                    "protocol": "HTTP",
+                    "method": {
+                        "name": "GET",
+                        "request-body": false
+                    },
+                    "url": "localhost:4567/a_new_site/n:a_new_node/e:a_new_entry",
+                    "body-type": "Text",
+                    "headers-type": "Form",
+                    "url-assist": false
+                },
+                "modified": "Thu, 29 Nov 2012 18:11:46 -0800"
+            }, {
+                "id": "8458C2F3-77A5-4F92-B357-24EE5962E591",
+                "name": "remove entry",
+                "request": {
+                    "protocol": "HTTP",
+                    "method": {
+                        "name": "DELETE",
+                        "request-body": false
+                    },
+                    "url": "localhost:4567/a_new_site/n:a_new_node/e:a_new_entry",
+                    "body-type": "Text",
+                    "headers-type": "Form",
+                    "url-assist": false
+                },
+                "modified": "Thu, 29 Nov 2012 18:14:25 -0800"
+            }, {
+                "id": "FD89C366-FCA5-4098-A69B-73E3EFA3BDD2",
+                "name": "set node attribute",
+                "request": {
+                    "protocol": "HTTP",
+                    "method": {
+                        "name": "POST",
+                        "request-body": true
+                    },
+                    "url": "localhost:4567/a_new_site/n:a_new_node/a:a_new_attribute?content=attribute content",
+                    "body-type": "Text",
+                    "headers-type": "Form",
+                    "url-assist": false
+                },
+                "modified": "Thu, 29 Nov 2012 18:19:36 -0800"
+            }, {
+                "id": "E0CF0DD1-6508-41F0-806B-13606955C11B",
+                "name": "remove node attribute",
+                "request": {
+                    "protocol": "HTTP",
+                    "method": {
+                        "name": "DELETE",
+                        "request-body": false
+                    },
+                    "url": "localhost:4567/a_new_site/n:a_new_node/a:a_new_attribute",
+                    "body-type": "Text",
+                    "headers-type": "Form",
+                    "url-assist": false
+                },
+                "modified": "Thu, 29 Nov 2012 18:23:46 -0800"
+            }, {
+                "id": "2641AC1F-5466-479C-953C-620773CFFF4B",
+                "name": "untag site",
+                "request": {
+                    "protocol": "HTTP",
+                    "method": {
+                        "name": "DELETE",
+                        "request-body": false
+                    },
+                    "url": "localhost:4567/a_new_site/t:a_new_tag",
+                    "body-type": "Text",
+                    "headers-type": "Form",
+                    "url-assist": false
+                },
+                "modified": "Thu, 29 Nov 2012 18:27:57 -0800"
+            }, {
+                "id": "31A2A623-DA8B-4D28-B9F5-4D4A0DAAA66B",
+                "name": "tag site",
+                "request": {
+                    "protocol": "HTTP",
+                    "method": {
+                        "name": "POST",
+                        "request-body": true
+                    },
+                    "url": "localhost:4567/a_new_site/t:a_new_tag",
+                    "body-type": "Text",
+                    "headers-type": "Form",
+                    "url-assist": false
+                },
+                "modified": "Thu, 29 Nov 2012 18:28:10 -0800"
+            }, {
+                "id": "0CE19245-DE45-4807-8FDB-98D295CEA7FE",
+                "name": "tag node",
+                "request": {
+                    "protocol": "HTTP",
+                    "method": {
+                        "name": "POST",
+                        "request-body": true
+                    },
+                    "url": "localhost:4567/a_new_site/n:a_new_node/t:a_new_tag",
+                    "body-type": "Text",
+                    "headers-type": "Form",
+                    "url-assist": false
+                },
+                "modified": "Thu, 29 Nov 2012 18:30:00 -0800"
+            }, {
+                "id": "20D6CFB1-A69C-4E76-9C4B-392BCC5C52D5",
+                "name": "untag node",
+                "request": {
+                    "protocol": "HTTP",
+                    "method": {
+                        "name": "DELETE",
+                        "request-body": false
+                    },
+                    "url": "localhost:4567/a_new_site/n:a_new_node/t:a_new_tag",
+                    "body-type": "Text",
+                    "headers-type": "Form",
+                    "url-assist": false
+                },
+                "modified": "Thu, 29 Nov 2012 18:30:24 -0800"
+            }]
+        }
+    },
+    "version": 1,
+    "modified": "Thu, 29 Nov 2012 18:30:24 -0800"
+}
