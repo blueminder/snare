@@ -459,7 +459,7 @@ def untag_node(site, node, tags)
   end
 end
 
-def tag_entry(site, node, entry, tags)
+def tag_node_entry(site, node, entry, tags)
   if ($r.exists("#{$user}:#{site}:#{node}:#{entry}"))
     $r.sadd("#{$user}::tagged:entries", "#{site}:#{node}:#{entry}")
     $r.sadd("#{$user}:#{site}:#{node}::tagged:entries", entry)
@@ -469,7 +469,7 @@ def tag_entry(site, node, entry, tags)
   end
 end
 
-def untag_entry(site, node, tags)
+def untag_node_entry(site, node, tags)
   if ($r.exists("#{$user}:#{site}:#{node}:#{entry}::tags"))
     tags.each do |tag|
       $r.srem("#{$user}:#{site}:#{node}::tags", tag)
