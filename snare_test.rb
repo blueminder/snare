@@ -18,8 +18,17 @@ class SnareTest < Test::Unit::TestCase
   end
 
   def test_get_node
+    #setup (will separate later)
+    post '/a_new_site/n:a_new_node'
+
     get '/a_new_site/n:a_new_node'
     assert last_response.ok?
     assert_equal '{"title":"a_new_node","site":"a_new_site","entries":"0","user":"test"}', last_response.body
+  end
+
+  def test_delete_node
+    delete '/a_new_site/n:a_new_node'
+    assert last_response.ok?
+    assert_equal '{"user":"test","site":"a_new_site","node":"a_new_node"}', last_response.body
   end
 end
