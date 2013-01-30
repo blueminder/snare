@@ -1,0 +1,6 @@
+source  'http://rubygems.org'
+gem 'sinatra'
+gem 'redis'
+gem 'json'
+gem 'test-unit'
+gem 'rack-test'
