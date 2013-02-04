@@ -17,6 +17,15 @@ class SnareTest < Test::Unit::TestCase
     assert_equal '{"user":"test","site":"a_new_site"}', last_response.body
   end
   
+  def test_list_sites
+    #setup (will separate later)
+    post '/a_new_site' 
+
+    get '/sites'
+    assert last_response.ok?
+    assert_equal '["a_new_site"]', last_response.body
+  end
+
   def test_create_new_node
     post '/a_new_site/n:a_new_node'
     assert last_response.ok?
