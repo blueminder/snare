@@ -48,10 +48,18 @@ class SnareTest < Test::Unit::TestCase
   end
   
   def test_set_node_attribute
-    #setup
-    post '/a_new_site/n:a_new_node'
+    post '/a_new_site/n:a_new_node/a:a_new_attribute?content=attribute content'
     assert last_response.ok?
     assert_equal '{"title":"a_new_node","site":"a_new_site","entries":"0","a_new_attribute":"attribute content","user":"test"}', last_response.body
+  end
+
+  def test_delete_node_attribute
+    #setup
+    post '/a_new_site/n:a_new_node/a:a_new_attribute?content=attribute content'
+
+    delete '/a_new_site/n:a_new_node/a:a_new_attribute'
+    assert last_response.ok?
+    assert_equal '{"title":"a_new_node","site":"a_new_site","entries":"0","user":"test"}', last_response.body
   end
 
 end
