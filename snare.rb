@@ -450,6 +450,7 @@ def tag_node(site, node, tags)
     $r.sadd("#{$user}:#{site}::tagged:nodes", node)
     tags.each do |tag|
       $r.sadd("#{$user}:#{site}:#{node}::tags", tag)
+      $r.sadd("#{$user}::tag:#{tag}::nodes", node)
     end
   end
 end
@@ -458,6 +459,7 @@ def untag_node(site, node, tags)
   if ($r.exists("#{$user}:#{site}:#{node}::tags"))
     tags.each do |tag|
       $r.srem("#{$user}:#{site}:#{node}::tags", tag)
+      $r.srem("#{$user}::tag:#{tag}::nodes", node)
     end
     if ($r.zcard("#{$user}:#{site}:#{node}::tags") == 0)
       $r.srem("#{$user}::tagged:nodes", "#{site}:#{node}")
@@ -512,3 +514,4 @@ def untag_rel(subject_site, subject_node, predicate, object_site, object_node, t
     end
   end
 end
+
