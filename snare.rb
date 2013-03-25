@@ -312,6 +312,9 @@ def show_node(site, title)
     node = $r.hgetall("#{$user}:#{site}:#{title}")
     node['site'] = site
     node['user'] = $user
+    if $r.exists("#{$user}:#{site}:#{title}::tags")
+      node['tags'] = $r.smembers("#{$user}:#{site}:#{title}::tags").join(", ")
+    end
     content_type :json
     JSON.generate(node)
   end
