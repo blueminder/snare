@@ -133,7 +133,7 @@ delete "/:site_id/n\::node_id/e\::entry_id/t\::tags" do
   @current_entry = params["entry_id"]
   # tags represented as a '+' separated string
   @tags = params["tags"].split('+')
-  tag_node_entry(@current_site, @current_node, @current_entry, @tags)
+  untag_node_entry(@current_site, @current_node, @current_entry, @tags)
 end
 
 # tag relationship
@@ -489,16 +489,18 @@ def tag_node_entry(site, node, entry, tags)
     $r.sadd("#{$user}:#{site}:#{node}::tagged:entries", entry)
     tags.each do |tag|
       $r.sadd("#{$user}:#{site}:#{node}:#{entry}::tags", tag)
+      $r.sadd("#{$user}::tag:#{tag}::entries", "#{site}:#{node}:#{entry}")
     end
   end
 end
 
-def untag_node_entry(site, node, tags)
+def untag_node_entry(site, node, entry, tags)
   if ($r.exists("#{$user}:#{site}:#{node}:#{entry}::tags"))
     tags.each do |tag|
-      $r.srem("#{$user}:#{site}:#{node}::tags", tag)
+      $r.srem("#{$user}:#{site}:#{node}:#{entry}::tags", tag)
+      $r.srem("#{$user}::tag:#{tag}::entries", "#{site}:#{node}:#{entry}")
     end
-    if ($r.zcard("#{$user}:#{site}:#{node}:#{entry}::tags") == 0)
+    if ($r.scard("#{$user}:#{site}:#{node}:#{entry}::tags") == 0)
       $r.srem("#{$user}::tagged:entries", "#{site}:#{node}:#{entry}")
       $r.srem("#{$user}:#{site}:#{node}::tagged:entries", entry)
       $r.del("#{$user}:#{site}:#{node}:#{entry}::tags")
