@@ -366,7 +366,6 @@ def show_entry(site, node, entry_name)
     entry = $r.hgetall("#{$user}:#{site}:#{node}:#{entry_name}")
     puts "#{$user}:#{site}:#{node}:#{entry_name}::tags"
     if $r.exists("#{$user}:#{site}:#{node}:#{entry_name}::tags")
-      puts "bar"
       entry['tags'] = $r.smembers("#{$user}:#{site}:#{node}:#{entry_name}::tags").join(", ")
     end
     content_type :json
