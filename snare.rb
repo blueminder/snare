@@ -329,7 +329,7 @@ def show_node_attribute(site, node, attribute)
     shown[attribute] = $r.hget("#{$user}:#{site}:#{node}", attribute)
     content_type :json
     JSON.generate(shown)
-  end 
+  end
 end
 
 def set_node_attribute(site, node, attribute, content)
@@ -347,9 +347,14 @@ def remove_node_attribute(site, node, attribute)
   end
 end
 
-def show_entry(site, node, entry)
-  if ($r.exists("#{$user}:#{site}:#{node}:#{entry}"))
-    entry = $r.hgetall("#{$user}:#{site}:#{node}:#{entry}")
+def show_entry(site, node, entry_name)
+  if ($r.exists("#{$user}:#{site}:#{node}:#{entry_name}"))
+    entry = $r.hgetall("#{$user}:#{site}:#{node}:#{entry_name}")
+    puts "#{$user}:#{site}:#{node}:#{entry_name}::tags"
+    if $r.exists("#{$user}:#{site}:#{node}:#{entry_name}::tags")
+      puts "bar"
+      entry['tags'] = $r.smembers("#{$user}:#{site}:#{node}:#{entry_name}::tags").join(", ")
+    end
     content_type :json
     JSON.generate(entry)
   end
