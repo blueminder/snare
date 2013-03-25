@@ -203,6 +203,12 @@ get '/:site_id/n\::node_id' do
   show_node(@current_site, @current_node)
 end
 
+# show tagged sites
+get '/t\::tag_id/sites' do
+  @current_tag = params["tag_id"]
+  show_tagged_sites(@current_tag)
+end
+
 # show tagged nodes
 get '/t\::tag_id/nodes' do
   @current_tag = params["tag_id"]
@@ -332,6 +338,14 @@ def show_node(site, title)
   end
 end
 
+def show_tagged_sites(tag)
+  if ($r.exists("#{$user}::tag:#{tag}::sites"))
+    sites = $r.smembers("#{$user}::tag:#{tag}::sites")
+    content_type :json
+    JSON.generate(sites)
+  end
+end
+
 def show_tagged_nodes(tag)
   if ($r.exists("#{$user}::tag:#{tag}::nodes"))
     nodes = $r.smembers("#{$user}::tag:#{tag}::nodes")
@@ -455,6 +469,7 @@ def tag_site(site, tags)
     $r.sadd("#{$user}::tagged:sites", site)
     tags.each do |tag|
       $r.sadd("#{$user}:#{site}::tags", tag)
+      $r.sadd("#{$user}::tag:#{tag}::sites", site)
     end
   end
 end
@@ -462,9 +477,11 @@ end
 def untag_site(site, tags)
   if ($r.exists("#{$user}:#{site}::tags"))
     tags.each do |tag|
+      puts tag
       $r.srem("#{$user}:#{site}::tags", tag)
+      $r.srem("#{$user}::tag:#{tag}::sites", site)
     end
-    if ($r.zcard("#{$user}:#{site}::tags") == 0)
+    if ($r.scard("#{$user}:#{site}::tags") == 0)
       $r.srem("#{$user}::tagged:sites", site)
       $r.del("#{$user}:#{site}::tags")
     end
@@ -488,7 +505,7 @@ def untag_node(site, node, tags)
       $r.srem("#{$user}:#{site}:#{node}::tags", tag)
       $r.srem("#{$user}::tag:#{tag}::nodes", "#{site}:#{node}")
     end
-    if ($r.zcard("#{$user}:#{site}:#{node}::tags") == 0)
+    if ($r.scard("#{$user}:#{site}:#{node}::tags") == 0)
       $r.srem("#{$user}::tagged::nodes", "#{site}:#{node}")
       $r.srem("#{$user}:#{site}::tagged::nodes", "#{site}:#{node}")
       $r.del("#{$user}:#{site}:#{node}::tags")
