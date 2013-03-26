@@ -539,24 +539,27 @@ def untag_node_entry(site, node, entry, tags)
 end
 
 def tag_rel(subject_site, subject_node, predicate, object_site, object_node, tags)
-  if ($r.exists("#{$user}:#{site}:#{node}:#{entry}"))
-    $r.sadd("#{$user}::tagged:entries", "#{site}:#{node}:#{entry}")
-    $r.sadd("#{$user}:#{site}:#{node}::tagged:entries", entry)
+  # I really gotta find a nicer way to outline relationships. OH WELL. HACK AWAY.
+  if ($r.exists("#{$user}:#{subject_site}:#{subject_node}:#{predicate}:#{object_site}:#{object_node}"))
+    $r.sadd("#{$user}::tagged:relationships",  "#{$user}:#{subject_site}:#{subject_node}:#{predicate}:#{object_site}:#{object_node}")
+    $r.sadd("#{$user}:#{subject_site}:#{subject_node}::tagged:relationships", "#{$user}:#{subject_site}:#{subject_node}:#{predicate}:#{object_site}:#{object_node}")
     tags.each do |tag|
-      $r.sadd("#{$user}:#{site}:#{node}:#{entry}::tags", tag)
+      $r.sadd("#{$user}:#{subject_site}:#{subject_node}:#{predicate}:#{object_site}:#{object_node}::tags", tag)
+      $r.sadd("#{$user}::tag:#{tag}::relationships", "#{$user}:#{subject_site}:#{subject_node}:#{predicate}:#{object_site}:#{object_node}")
     end
   end
 end
 
 def untag_rel(subject_site, subject_node, predicate, object_site, object_node, tags)
-  if ($r.exists("#{$user}:#{site}:#{node}:#{entry}::tags"))
+  if ($r.exists("#{$user}:#{subject_site}:#{subject_node}:#{predicate}:#{object_site}:#{object_node}::tags"))
     tags.each do |tag|
-      $r.srem("#{$user}:#{site}:#{node}::tags", tag)
+      $r.srem("#{$user}:#{subject_site}:#{subject_node}:#{predicate}:#{object_site}:#{object_node}::tags", tag)
+      $r.srem("#{$user}::tag:#{tag}::relationships", "#{$user}:#{subject_site}:#{subject_node}:#{predicate}:#{object_site}:#{object_node}")
     end
-    if ($r.zcard("#{$user}:#{site}:#{node}:#{entry}::tags") == 0)
-      $r.srem("#{$user}::tagged:entries", "#{site}:#{node}:#{entry}")
-      $r.srem("#{$user}:#{site}:#{node}::tagged:entries", entry)
-      $r.del("#{$user}:#{site}:#{node}:#{entry}::tags")
+    if ($r.scard("#{$user}:#{subject_site}:#{subject_node}:#{predicate}:#{object_site}:#{object_node}::tags") == 0)
+      $r.srem("#{$user}::tagged:relationships",  "#{$user}:#{subject_site}:#{subject_node}:#{predicate}:#{object_site}:#{object_node}")
+      $r.srem("#{$user}:#{subject_site}:#{subject_node}::tagged:relationships", "#{$user}:#{subject_site}:#{subject_node}:#{predicate}:#{object_site}:#{object_node}")
+      $r.del("#{$user}:#{subject_site}:#{subject_node}:#{predicate}:#{object_site}:#{object_node}::tags")
     end
   end
 end
