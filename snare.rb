@@ -521,6 +521,7 @@ def tag_node_entry(site, node, entry, tags)
       $r.sadd("#{$user}:#{site}:#{node}:#{entry}::tags", tag)
       $r.sadd("#{$user}::tag:#{tag}::entries", "#{site}:#{node}:#{entry}")
     end
+    show_entry(site, node, entry)
   end
 end
 
@@ -535,6 +536,7 @@ def untag_node_entry(site, node, entry, tags)
       $r.srem("#{$user}:#{site}:#{node}::tagged:entries", entry)
       $r.del("#{$user}:#{site}:#{node}:#{entry}::tags")
     end
+    show_entry(site, node, entry)
   end
 end
 
