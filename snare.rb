@@ -22,6 +22,12 @@ post '/:site_id' do
   create_site(@current_site)
 end
 
+# show site
+get '/:site_id' do
+  @current_site = params["site_id"]
+  show_site(@current_site)
+end
+
 # new node
 post '/:site_id/n\::node_id' do
   @current_site = params["site_id"]
@@ -285,6 +291,18 @@ def remove_site(title)
   end
 end
 
+def show_site(title)
+  if ($r.exists("#{$user}:#{title}"))
+    site = $r.hgetall("#{$user}:#{title}")
+    site['user'] = $user
+    if $r.exists("#{$user}:#{title}::tags")
+      site['tags'] = $r.smembers("#{$user}:#{title}::tags").join(", ")
+    end
+    content_type :json
+    JSON.generate(site)
+  end
+end 
+
 def create_node(site, title)
   if ($r.exists("#{$user}:#{site}"))
     $r.sadd("#{$user}:#{site}::nodes", title)
@@ -471,6 +489,7 @@ def tag_site(site, tags)
       $r.sadd("#{$user}:#{site}::tags", tag)
       $r.sadd("#{$user}::tag:#{tag}::sites", site)
     end
+    show_site(site)
   end
 end
 
@@ -485,6 +504,7 @@ def untag_site(site, tags)
       $r.srem("#{$user}::tagged:sites", site)
       $r.del("#{$user}:#{site}::tags")
     end
+    show_site(site)
   end
 end
 
@@ -496,6 +516,7 @@ def tag_node(site, node, tags)
       $r.sadd("#{$user}:#{site}:#{node}::tags", tag)
       $r.sadd("#{$user}::tag:#{tag}::nodes", "#{site}:#{node}")
     end
+    show_node(site, node)
   end
 end
 
@@ -510,6 +531,7 @@ def untag_node(site, node, tags)
       $r.srem("#{$user}:#{site}::tagged::nodes", "#{site}:#{node}")
       $r.del("#{$user}:#{site}:#{node}::tags")
     end
+    show_node(site, node)
   end
 end
 
